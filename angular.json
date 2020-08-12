@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-electron-timer"
+    }
+  },
+  "defaultProject": "angular-electron-timer",
+  "cli": {
+    "analytics": "72d7d653-6569-457b-a616-150164b0d2e9"
+  }
 }
