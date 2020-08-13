@@ -9,7 +9,7 @@ round-progress {
   bottom: auto;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  font-size: 35.7143px;
+  font-size: 35px;
   position: absolute;
   color: #bbb;
   font-weight: 100;
