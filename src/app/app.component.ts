@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TimeInterval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,6 @@ export class AppComponent {
   elapsedTime = 0;
   delta = 1000; // milliseconds
   interval: number;
-  timeLength: number;
 
   inputValue = 0; // number of minutes
   isStarted = false;
@@ -23,7 +21,7 @@ export class AppComponent {
     this.interval = setInterval(() => {
       this.elapsedTime = Date.now() - this.startTime;
 
-      if (this.elapsedTime >= this.inputValue) {
+      if (this.elapsedTime >= this.inputValue * 1000 * 60) {
         this.stop();
         this.playChime();
       }
@@ -36,18 +34,18 @@ export class AppComponent {
     audio.play();
   }
 
-  pause(): void {
-    this.stop();
-    this.inputValue = (this.inputValue - this.elapsedTime) / 60 / 1000;
-  }
-
   stop(): void {
-    // this.elapsedTime = this.timerLength;
     this.isStarted = false;
     clearInterval(this.interval);
   }
 
-  msToTime(time): string {
+  reset(): void {
+    this.stop();
+    this.inputValue = 0;
+    this.elapsedTime = 0;
+  }
+
+  msToTime(time: number): string {
     const ms = time % 1000;
     time = (time - ms) / 1000;
     const secs = time % 60;
@@ -58,7 +56,7 @@ export class AppComponent {
     return hrs + ':' + mins + ':' + secs;
   }
 
-  // changeInput(event: any): void {
-  //   this.timerLength = event.target.value;
-  // }
+  changeInput(event: any): void {
+    this.inputValue = event.target.value;
+  }
 }

@@ -1,10 +1,10 @@
-<div class="progress-wrapper" >
+<div class="progress-wrapper">
   <div class="time-label">
-    {{ msToTime(inputValue*1000-elapsedTime) }}
+    {{ msToTime(inputValue * 1000 * 60 - elapsedTime) }}
   </div>
   <round-progress
-    [current]="inputValue*1000-elapsedTime"
-    [max]="inputValue"
+    [current]="inputValue * 1000 * 60 - elapsedTime"
+    [max]="inputValue * 1000 * 60"
     [color]="'#45ccce'"
     [background]="'#eaeaea'"
     [radius]="125"
@@ -17,8 +17,16 @@
 <div class="buttons">
   <p>inputvalue is {{ inputValue }}</p>
   <p>elapsedTime is {{ elapsedTime }}</p>
-  <input [(ngModel)]="inputValue" type="number" placeholder="enter number" />
-  <button *ngIf="!isStarted" (click)="start()">Start</button>
-  <button *ngIf="isStarted" (click)="pause()">Pause</button>
-  <button *ngIf="isStarted" (click)="stop()">Stop</button>
+
+  <input
+    [ngModel]="inputValue"
+    (change)="changeInput($event)"
+    type="number"
+    placeholder="enter number of minutes"
+  />
+  <button [disabled]="isStarted || inputValue <= 0" (click)="start()">
+    Start
+  </button>
+  <button [disabled]="!isStarted" (click)="stop()">Stop</button>
+  <button [disabled]="!isStarted" (click)="reset()">Reset</button>
 </div>
