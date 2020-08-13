@@ -22,6 +22,7 @@ export class AppComponent {
 
       if (this.elapsedTime >= this.timerLength) {
         this.stop();
+        this.playChime();
       }
     }, this.delta);
   }
@@ -34,7 +35,6 @@ export class AppComponent {
 
   stop(): void {
     // this.elapsedTime = this.timerLength;
-    this.playChime();
     clearInterval(this.interval);
   }
 
