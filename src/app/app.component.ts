@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 
 import { takeWhile, tap, finalize } from 'rxjs/operators';
@@ -32,17 +32,11 @@ export class AppComponent {
         console.log(dat);
         if (this.elapsedTime >= this.totalTime) {
           this.playChime();
-          this.stop();
+          this.reset();
         } else if (!this.isStarted) {
           this.stop();
         }
       });
-  }
-
-  playChime(): void {
-    const audio = new Audio('../assets/chime.mp3');
-    audio.load();
-    audio.play();
   }
 
   stop(): void {
@@ -53,6 +47,12 @@ export class AppComponent {
     this.stop();
     this.inputValue = 0;
     this.elapsedTime = 0;
+  }
+
+  playChime(): void {
+    const audio = new Audio('../assets/chime.mp3');
+    audio.load();
+    audio.play();
   }
 
   msToTime(time: number): string {

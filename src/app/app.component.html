@@ -16,17 +16,13 @@
 </div>
 
 <div class="buttons">
-  <p>inputvalue is {{ inputValue }}</p>
-  <p>elapsedTime is {{ elapsedTime }}</p>
-  <p>elapsedTime is {{ elapsedTime }}</p>
-
   <input
     [ngModel]="inputValue"
     (change)="changeInput($event)"
     type="number"
     placeholder="enter number of minutes"
   />
-  <button [disabled]="isStarted || inputValue < 0" (click)="start()">
+  <button [disabled]="isStarted || inputValue <= 0" (click)="start()">
     Start
   </button>
   <button [disabled]="!isStarted" (click)="stop()">Stop</button>
