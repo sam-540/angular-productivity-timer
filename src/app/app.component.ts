@@ -10,11 +10,10 @@ import { takeWhile, tap, finalize } from 'rxjs/operators';
 })
 export class AppComponent {
   startTime: number;
-  elapsedTime = 0;
   delta = 100; // milliseconds
   timerInterval: number;
 
-  timeLeft = 0;
+  elapsedTime = 0;
 
   inputValue = 0; // number of minutes
   isStarted = false;
@@ -23,16 +22,15 @@ export class AppComponent {
 
   start(): void {
     this.isStarted = true;
-    // this.timeLeft = this.inputValue * 1000 * 60;
 
     this.observableInterval
       .pipe(
-        takeWhile((_) => this.timeLeft >= 0 && this.isStarted),
-        tap((_) => (this.timeLeft += this.delta))
+        takeWhile((_) => this.elapsedTime <= this.totalTime && this.isStarted),
+        tap((_) => (this.elapsedTime += this.delta))
       )
       .subscribe((dat) => {
         console.log(dat);
-        if (this.timeLeft <= 0) {
+        if (this.elapsedTime >= this.totalTime) {
           this.playChime();
           this.stop();
         } else if (!this.isStarted) {
@@ -54,7 +52,7 @@ export class AppComponent {
   reset(): void {
     this.stop();
     this.inputValue = 0;
-    this.timeLeft = 0;
+    this.elapsedTime = 0;
   }
 
   msToTime(time: number): string {

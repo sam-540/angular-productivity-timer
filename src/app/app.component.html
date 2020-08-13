@@ -1,9 +1,9 @@
 <div class="progress-wrapper">
   <div class="time-label">
-    {{ msToTime(totalTime - this.timeLeft) }}
+    {{ msToTime(totalTime - this.elapsedTime) }}
   </div>
   <round-progress
-    [current]="totalTime - this.timeLeft"
+    [current]="totalTime - this.elapsedTime"
     [max]="totalTime"
     [color]="'#45ccce'"
     [background]="'#eaeaea'"
@@ -18,7 +18,7 @@
 <div class="buttons">
   <p>inputvalue is {{ inputValue }}</p>
   <p>elapsedTime is {{ elapsedTime }}</p>
-  <p>elapsedTime is {{ timeLeft }}</p>
+  <p>elapsedTime is {{ elapsedTime }}</p>
 
   <input
     [ngModel]="inputValue"
@@ -26,7 +26,7 @@
     type="number"
     placeholder="enter number of minutes"
   />
-  <button [disabled]="isStarted || inputValue <= 0" (click)="start()">
+  <button [disabled]="isStarted || inputValue < 0" (click)="start()">
     Start
   </button>
   <button [disabled]="!isStarted" (click)="stop()">Stop</button>
