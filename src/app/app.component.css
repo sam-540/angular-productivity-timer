@@ -1,0 +1,30 @@
+.progress-wrapper {
+  position: relative;
+}
+round-progress {
+  margin: 0 auto;
+}
+.time-label {
+  top: 50%;
+  bottom: auto;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  font-size: 35.7143px;
+  position: absolute;
+  color: #bbb;
+  font-weight: 100;
+  line-height: 1;
+
+  box-sizing: border-box;
+}
+
+.buttons {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+}
+
+input {
+  display: block;
+  margin: 0 auto;
+}

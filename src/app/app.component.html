@@ -1,17 +1,24 @@
-<h1>test</h1>
+<div class="progress-wrapper" >
+  <div class="time-label">
+    {{ msToTime(inputValue*1000-elapsedTime) }}
+  </div>
+  <round-progress
+    [current]="inputValue*1000-elapsedTime"
+    [max]="inputValue"
+    [color]="'#45ccce'"
+    [background]="'#eaeaea'"
+    [radius]="125"
+    [stroke]="20"
+    [animationDelay]="0"
+  >
+  </round-progress>
+</div>
 
-<circle-progress
-  [percent]="(100 * (timerLength - elapsedTime)) / timerLength"
-  [lazy]="false"
-  [animationDuration]="0"
-></circle-progress>
-
-<p>{{ (100 * (timerLength - elapsedTime)) / timerLength }}</p>
-
-<input
-  (change)="changeInput($event)"
-  type="number"
-  placeholder="enter number"
-/>
-<button (click)="start()">Start</button>
-<button (click)="stop()">Stop</button>
+<div class="buttons">
+  <p>inputvalue is {{ inputValue }}</p>
+  <p>elapsedTime is {{ elapsedTime }}</p>
+  <input [(ngModel)]="inputValue" type="number" placeholder="enter number" />
+  <button *ngIf="!isStarted" (click)="start()">Start</button>
+  <button *ngIf="isStarted" (click)="pause()">Pause</button>
+  <button *ngIf="isStarted" (click)="stop()">Stop</button>
+</div>
