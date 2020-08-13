@@ -23,7 +23,7 @@ export class AppComponent {
 
   start(): void {
     this.isStarted = true;
-    //this.timeLeft = this.inputValue * 1000 * 60;
+    // this.timeLeft = this.inputValue * 1000 * 60;
 
     this.observableInterval
       .pipe(
