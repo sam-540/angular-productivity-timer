@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TimeInterval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,28 +11,32 @@ export class AppComponent {
   timerLength: number;
   delta: 100; // milliseconds
   interval: any;
+  chime = false;
 
   start(): void {
+    this.chime = false;
     this.startTime = Date.now();
 
     this.timerLength = this.timerLength * 1000 * 60;
 
     this.interval = setInterval(() => {
       this.elapsedTime = Date.now() - this.startTime;
-      console.log(
-        this.elapsedTime,
-        this.timerLength,
-        (100 * (this.timerLength - this.elapsedTime)) / this.timerLength
-      );
 
       if (this.elapsedTime >= this.timerLength) {
-        clearInterval(this.interval);
+        this.stop();
       }
     }, this.delta);
   }
 
+  playChime(): void {
+    const audio = new Audio('../assets/chime.mp3');
+    audio.load();
+    audio.play();
+  }
+
   stop(): void {
     // this.elapsedTime = this.timerLength;
+    this.playChime();
     clearInterval(this.interval);
   }
 
