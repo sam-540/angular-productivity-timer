@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { interval, Observable } from 'rxjs';
+
+import { takeWhile, tap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,24 +11,34 @@ import { Component } from '@angular/core';
 export class AppComponent {
   startTime: number;
   elapsedTime = 0;
-  delta = 1000; // milliseconds
-  interval: number;
+  delta = 100; // milliseconds
+  timerInterval: number;
+
+  timeLeft = 0;
 
   inputValue = 0; // number of minutes
   isStarted = false;
 
+  observableInterval: Observable<number> = interval(this.delta);
+
   start(): void {
     this.isStarted = true;
-    this.startTime = Date.now();
+    this.timeLeft = this.inputValue * 1000 * 60;
 
-    this.interval = setInterval(() => {
-      this.elapsedTime = Date.now() - this.startTime;
-
-      if (this.elapsedTime >= this.inputValue * 1000 * 60) {
-        this.stop();
-        this.playChime();
-      }
-    }, this.delta);
+    this.observableInterval
+      .pipe(
+        takeWhile((_) => this.timeLeft >= 0 && this.isStarted),
+        tap((_) => (this.timeLeft -= this.delta))
+      )
+      .subscribe((dat) => {
+        console.log(dat);
+        if (this.timeLeft <= 0) {
+          this.playChime();
+          this.stop();
+        } else if (!this.isStarted) {
+          this.stop();
+        }
+      });
   }
 
   playChime(): void {
@@ -36,13 +49,12 @@ export class AppComponent {
 
   stop(): void {
     this.isStarted = false;
-    clearInterval(this.interval);
   }
 
   reset(): void {
     this.stop();
     this.inputValue = 0;
-    this.elapsedTime = 0;
+    this.timeLeft = 0;
   }
 
   msToTime(time: number): string {
@@ -53,7 +65,7 @@ export class AppComponent {
     const mins = time % 60;
     const hrs = (time - mins) / 60;
 
-    return hrs + ':' + mins + ':' + secs;
+    return hrs + ':' + mins + ':' + secs + '.' + ms / 100;
   }
 
   changeInput(event: any): void {
