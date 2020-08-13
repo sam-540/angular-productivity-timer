@@ -11,10 +11,8 @@ export class AppComponent {
   timerLength: number;
   delta: 100; // milliseconds
   interval: any;
-  chime = false;
 
   start(): void {
-    this.chime = false;
     this.startTime = Date.now();
 
     this.timerLength = this.timerLength * 1000 * 60;
