@@ -23,12 +23,12 @@ export class AppComponent {
 
   start(): void {
     this.isStarted = true;
-    this.timeLeft = this.inputValue * 1000 * 60;
+    //this.timeLeft = this.inputValue * 1000 * 60;
 
     this.observableInterval
       .pipe(
         takeWhile((_) => this.timeLeft >= 0 && this.isStarted),
-        tap((_) => (this.timeLeft -= this.delta))
+        tap((_) => (this.timeLeft += this.delta))
       )
       .subscribe((dat) => {
         console.log(dat);
@@ -70,5 +70,9 @@ export class AppComponent {
 
   changeInput(event: any): void {
     this.inputValue = event.target.value;
+  }
+
+  get totalTime(): number {
+    return this.inputValue * 1000 * 60;
   }
 }

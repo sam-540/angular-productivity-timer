@@ -1,13 +1,14 @@
 <div class="progress-wrapper">
   <div class="time-label">
-    {{ msToTime(timeLeft) }}
+    {{ msToTime(totalTime - this.timeLeft) }}
   </div>
   <round-progress
-    [current]="this.timeLeft"
-    [max]="inputValue * 1000 * 60"
+    [current]="totalTime - this.timeLeft"
+    [max]="totalTime"
     [color]="'#45ccce'"
     [background]="'#eaeaea'"
     [radius]="125"
+    [rounded]="true"
     [stroke]="20"
     [animationDelay]="0"
   >
@@ -29,5 +30,5 @@
     Start
   </button>
   <button [disabled]="!isStarted" (click)="stop()">Stop</button>
-  <button [disabled]="!isStarted" (click)="reset()">Reset</button>
+  <button (click)="reset()">Reset</button>
 </div>
