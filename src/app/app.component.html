@@ -18,7 +18,7 @@
 <div class="buttons">
   <input
     [ngModel]="inputValue"
-    (keyup)="changeInput($event)"
+    (change)="changeInput($event)"
     type="number"
     placeholder="enter number of minutes"
   />
